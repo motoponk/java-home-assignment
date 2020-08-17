@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+
+  spring-boot-product:
+    build: .
+    image: motoponk/spring-boot-product
+    container_name: spring-boot-product
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://product-db:5432/productdb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=secret
+    ports:
+      - "8080:8080"
+      - "8787:8787"
+    restart: always
+    depends_on:
+      - product-db
+
+  product-db:
+    image: postgres:10.7
+    container_name: product-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=productdb
+      - PGDATA=/data/postgres
+    volumes:
+      - ~/data/product-db:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
