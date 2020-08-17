@@ -17,7 +17,9 @@ public class ProductRepositoryIT {
     private ProductRepository productRepository;
     
     @Test
-    public void shouldRetreiveProductsProperly() {
+    public void shouldRetreiveProductsAfterAdditionProperly() {
+        
+        assertTrue(productRepository.findAll().isEmpty());
         
         Product product = ProductTestUtil.createSampleProduct();
         productRepository.save(product);
