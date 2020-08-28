@@ -17,6 +17,7 @@ import lombok.experimental.UtilityClass;
 public class ProductTestUtil {
 
     public static final String SAMPLE_PRODUCT_1_SKU = "PR-01-V1";
+    public static final String SAMPLE_PRODUCT_2_SKU = "PR-02-V1";
     private static final BigDecimal SAMPLE_PRICE = BigDecimal.valueOf(50.00);
     private static final String SAMPLE_EMAIL = "dogukandogan@dogukandogan.com";
 
@@ -24,6 +25,14 @@ public class ProductTestUtil {
         return ProductDTO.builder()
                 .sku(SAMPLE_PRODUCT_1_SKU)
                 .name("Product 1")
+                .price(SAMPLE_PRICE)
+                .build();
+    }
+    
+    public static ProductDTO createSampleProduct2DTO() {
+        return ProductDTO.builder()
+                .sku(SAMPLE_PRODUCT_2_SKU)
+                .name("Product 2")
                 .price(SAMPLE_PRICE)
                 .build();
     }

@@ -2,12 +2,7 @@ package com.motoponk.assignment.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import com.motoponk.assignment.model.entity.Order;
 
