@@ -16,7 +16,8 @@ public class AssignmentApplication {
 
     @PostConstruct
     private void setTimeZone() {
-        TimeZone.setDefault(TimeZone.getTimeZone("EST"));
+        TimeZone.setDefault(TimeZone.getTimeZone("CEST"));
     }
+    
     
 }

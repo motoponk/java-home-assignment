@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.motoponk.assignment.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 @Slf4j
@@ -25,10 +27,6 @@ class ProductServiceImpl implements ProductService {
     private static final String PRODUCTS_CACHE_NAME = "products";
     
     private final ProductRepository productRepositoy;
-
-    public ProductServiceImpl(ProductRepository productRepositoy) {
-        this.productRepositoy = productRepositoy;
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -58,29 +56,22 @@ class ProductServiceImpl implements ProductService {
     @Override
     @CacheEvict(value = PRODUCTS_CACHE_NAME, allEntries = true)
     public ProductDTO updateProduct(final ProductDTO productDTO) {
-        Optional<Product> existingProduct = productRepositoy.findBySku(productDTO.getSku());
-        if (existingProduct.isEmpty()) {
-            log.warn("Product with SKU: {} does not exist.", productDTO.getSku());
-            throw new NoSuchProductException(productDTO.getSku());
-        }
-        final Product product = existingProduct.get();
+        Product product = productRepositoy.findBySku(productDTO.getSku()).orElseThrow(
+                () -> new NoSuchProductException(productDTO.getSku()));
+        return applyUpdate(productDTO, product);
+    }
+
+    private ProductDTO applyUpdate(final ProductDTO productDTO, final Product product) {
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
-
-        final Product result = productRepositoy.save(product);
-        log.debug("Update product operation is handled successfully. Saved product is {}.", result);
-        return new ProductDTO(result);
+        return new ProductDTO(productRepositoy.save(product));
     }
 
     @Override
     @CacheEvict(value = PRODUCTS_CACHE_NAME, allEntries = true)
     public void deleteProduct(final ProductDTO productDTO) {
-        Optional<Product> existingProduct = productRepositoy.findBySku(productDTO.getSku());
-        if (existingProduct.isEmpty()) {
-            log.warn("Product with SKU: {} does not exist.", productDTO.getSku());
-            throw new NoSuchProductException(productDTO.getSku());
-        }
-        final Product product = existingProduct.get();
+        Product product = productRepositoy.findBySku(productDTO.getSku()).orElseThrow(
+                () -> new NoSuchProductException(productDTO.getSku()));
         productRepositoy.delete(product);
         log.debug("Delete product operation is handled successfully. Deleted product is {}.", product);
     }

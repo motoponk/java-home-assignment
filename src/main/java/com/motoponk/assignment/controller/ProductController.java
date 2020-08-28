@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,18 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.motoponk.assignment.model.dto.ProductDTO;
 import com.motoponk.assignment.service.ProductService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@RequiredArgsConstructor
 @Slf4j
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
     
     @GetMapping
     public List<ProductDTO> readProducts() {
@@ -39,7 +38,7 @@ public class ProductController {
     
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void addProduct(@Valid ProductDTO productDTO) {
+    public void addProduct(@Valid @RequestBody ProductDTO productDTO) {
         productService.addProduct(productDTO);
         log.info("Add product operation has been executed successfully for product DTO: {}", productDTO);
     }

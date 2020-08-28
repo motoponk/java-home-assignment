@@ -44,7 +44,7 @@ public class OrderController {
     @GetMapping
     public List<OrderDTO> retreiveOrders(
             @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate, 
-            @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME)LocalDateTime endDate) {
+            @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate) {
         
         // TODO Apply better date conversion.. Start and date can have default value(s)..
         

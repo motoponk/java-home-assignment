@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -63,14 +62,14 @@ public class ProductControllerIntegrationTest {
         return this.restTemplate.getForObject(url, List.class).size();
     }
     
+    
     @Test
-    @Disabled
     public void testAddProduct() {
         int beforeSize = readProductsSize();
-        ProductDTO sampleProductDTO = ProductTestUtil.createSampleProductDTO();
+        ProductDTO sampleProduct2DTO = ProductTestUtil.createSampleProduct2DTO();
         
         ResponseEntity<Void> responseEntity = 
-                restTemplate.postForEntity(url, sampleProductDTO, Void.class);
+                restTemplate.postForEntity(url, sampleProduct2DTO, Void.class);
         
         assertEquals(201, responseEntity.getStatusCodeValue());
         

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.motoponk.assignment.exception.NoSuchProductException;
@@ -19,18 +20,14 @@ import com.motoponk.assignment.model.entity.Product;
 import com.motoponk.assignment.repository.OrderRepository;
 import com.motoponk.assignment.repository.ProductRepository;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ProductRepository productRepository) {
-        this.orderRepository = orderRepository;
-        this.productRepository = productRepository;
-    }
-    
     @Override
     public OrderDTO saveOrder(OrderRequestDTO orderDTO) {
         Set<Product> products = readProducts(orderDTO);
