@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.motoponk.assignment.model.dto.OrderRequestDTO;
 import com.motoponk.assignment.model.dto.ProductDTO;
@@ -24,12 +25,13 @@ public class OrderControllerIT extends AbstractIntegrationTest {
     
     
     @Test
+    @WithMockUser(value = ProductTestUtil.SAMPLE_EMAIL)
     public void shouldSaveOrderProperly() throws Exception {
         ProductDTO sampleProductDTO = ProductTestUtil.createSampleProductDTO();
         productService.addProduct(sampleProductDTO);
         
         OrderRequestDTO requestDTO = new OrderRequestDTO();
-        requestDTO.setEmail("mail@mail.com");
+        // requestDTO.setEmail("mail@mail.com");
         requestDTO.setProducts(Arrays.asList(sampleProductDTO));
         
         String json = this.objectMapper.writeValueAsString(requestDTO);

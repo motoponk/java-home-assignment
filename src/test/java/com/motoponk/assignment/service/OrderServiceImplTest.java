@@ -21,7 +21,7 @@ import com.motoponk.assignment.repository.ProductRepository;
 import com.motoponk.assignment.util.ProductTestUtil;
 
 public class OrderServiceImplTest {
-
+    
     private OrderRepository orderRepository = mock(OrderRepository.class);
     private ProductRepository productRepository = mock(ProductRepository.class);
     
@@ -39,7 +39,7 @@ public class OrderServiceImplTest {
         
         when(orderRepository.save(any())).thenReturn(order);
         
-        orderService.saveOrder(orderDTO);
+        orderService.saveOrder(ProductTestUtil.SAMPLE_EMAIL, orderDTO);
     }
     
     @Test
@@ -50,10 +50,11 @@ public class OrderServiceImplTest {
         LocalDateTime start = LocalDateTime.of(2020, 7, 1, 0, 0, 0);
         LocalDateTime end = LocalDateTime.now();
         
-        given(orderRepository.findAllByCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqual(start, end))
+        given(orderRepository.findAllByEmailAndCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqualOrderByCreatedTimeDesc(
+                ProductTestUtil.SAMPLE_EMAIL, start, end))
                              .willReturn(Arrays.asList(order));
         
-        List<OrderDTO> orders = orderService.retreiveOrders(start, end);
+        List<OrderDTO> orders = orderService.retreiveOrders(ProductTestUtil.SAMPLE_EMAIL, start, end);
         
         assertTrue(orders.size() == 1);
     }

@@ -33,6 +33,7 @@ public class Order extends BaseEntity {
     @Email
     private String email;
     
+    @Builder.Default
     @ManyToMany(targetEntity = Product.class, 
             cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Set<Product> products = new HashSet<>();

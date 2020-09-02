@@ -9,7 +9,7 @@ import com.motoponk.assignment.model.entity.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findAllByCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqual(
-            LocalDateTime startDate, LocalDateTime endDate);
+    List<Order> findAllByEmailAndCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqualOrderByCreatedTimeDesc(
+            String email, LocalDateTime startDate, LocalDateTime endDate);
 
 }

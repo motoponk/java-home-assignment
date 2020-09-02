@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<swagger.version>2.7.0</swagger.version>
+		<jjwt.version>0.9.1</jjwt.version>
 
 		<jacoco.version>0.8.5</jacoco.version>
 
@@ -28,6 +29,8 @@
 
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
+		<maven.dependency.check.plugin.version>3.3.2</maven.dependency.check.plugin.version>
+		<maven.sonar.plugin.version>3.7.0.1746</maven.sonar.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -59,6 +62,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
+		
 		<!-- 
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -165,6 +175,8 @@
 						<exclude>**/model/entity/*</exclude>
 						<exclude>**/config/*</exclude>
 						<exclude>**/exception/*</exclude>
+						<exclude>**/security/*</exclude>
+						<exclude>**/util/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
@@ -256,7 +268,7 @@
 					<plugin>
 						<groupId>org.owasp</groupId>
 						<artifactId>dependency-check-maven</artifactId>
-						<version>3.3.2</version>
+						<version>${maven.dependency.check.plugin.version}</version>
 						<configuration>
 							<failOnError>false</failOnError>
 						</configuration>
@@ -272,7 +284,7 @@
 					<plugin>
 						<groupId>org.sonarsource.scanner.maven</groupId>
 						<artifactId>sonar-maven-plugin</artifactId>
-						<version>3.7.0.1746</version>
+						<version>${maven.sonar.plugin.version}</version>
 					</plugin>
 				</plugins>
 			</build>

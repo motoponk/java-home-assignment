@@ -29,11 +29,11 @@ class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
 
     @Override
-    public OrderDTO saveOrder(OrderRequestDTO orderDTO) {
+    public OrderDTO saveOrder(String email, OrderRequestDTO orderDTO) {
         Set<Product> products = readProducts(orderDTO);
         BigDecimal totalPrice = calculateTotalPrice(products);
         
-        Order order = new Order(orderDTO.getEmail(), products, totalPrice);
+        Order order = new Order(email, products, totalPrice);
         Order savedOrder = orderRepository.save(order);
         return createResult(savedOrder);
     }
@@ -67,8 +67,9 @@ class OrderServiceImpl implements OrderService {
     }
     
     @Override
-    public List<OrderDTO> retreiveOrders(LocalDateTime startDate, LocalDateTime endDate) {
-        return orderRepository.findAllByCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqual(startDate, endDate)
+    public List<OrderDTO> retreiveOrders(String email, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderRepository.findAllByEmailAndCreatedTimeGreaterThanEqualAndCreatedTimeLessThanEqualOrderByCreatedTimeDesc(
+                email, startDate, endDate)
                               .stream()
                               .map(OrderDTO::new)
                               .collect(Collectors.toList());

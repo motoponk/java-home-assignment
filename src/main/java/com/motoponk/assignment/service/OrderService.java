@@ -8,8 +8,8 @@ import com.motoponk.assignment.model.dto.OrderRequestDTO;
 
 public interface OrderService {
 
-    OrderDTO saveOrder(OrderRequestDTO orderDTO);
+    OrderDTO saveOrder(String email, OrderRequestDTO orderDTO);
 
-    List<OrderDTO> retreiveOrders(LocalDateTime startDate, LocalDateTime endDate);
+    List<OrderDTO> retreiveOrders(String email, LocalDateTime startDate, LocalDateTime endDate);
 
 }

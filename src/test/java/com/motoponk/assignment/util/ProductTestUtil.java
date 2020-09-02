@@ -3,8 +3,11 @@ package com.motoponk.assignment.util;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.userdetails.User;
 
 import com.motoponk.assignment.model.dto.OrderDTO;
 import com.motoponk.assignment.model.dto.ProductDTO;
@@ -19,7 +22,9 @@ public class ProductTestUtil {
     public static final String SAMPLE_PRODUCT_1_SKU = "PR-01-V1";
     public static final String SAMPLE_PRODUCT_2_SKU = "PR-02-V1";
     private static final BigDecimal SAMPLE_PRICE = BigDecimal.valueOf(50.00);
-    private static final String SAMPLE_EMAIL = "dogukandogan@dogukandogan.com";
+    public static final String SAMPLE_EMAIL = "dogukandogan@dogukandogan.com";
+    
+    private static final String SAMPLE_PASSWORD = "secret";
 
     public static ProductDTO createSampleProductDTO() {
         return ProductDTO.builder()
@@ -63,6 +68,10 @@ public class ProductTestUtil {
         Set<Product> products = new HashSet<>();
         products.add(createSampleProduct());
         return products;
+    }
+    
+    public static User createSampleAuthenticationUser() {
+        return new User(SAMPLE_EMAIL, SAMPLE_PASSWORD, Collections.emptyList());
     }
     
 }

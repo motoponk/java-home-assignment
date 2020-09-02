@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.motoponk.assignment.annotation.RequiresAdminPrivilege;
 import com.motoponk.assignment.model.dto.ProductDTO;
 import com.motoponk.assignment.service.ProductService;
 
@@ -35,15 +36,16 @@ public class ProductController {
         return products;
     }
     
-    
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @RequiresAdminPrivilege
     public void addProduct(@Valid @RequestBody ProductDTO productDTO) {
         productService.addProduct(productDTO);
         log.info("Add product operation has been executed successfully for product DTO: {}", productDTO);
     }
     
     @PutMapping
+    @RequiresAdminPrivilege
     public ProductDTO updateProduct(@Valid ProductDTO productDTO) {
         ProductDTO updatedProduct = productService.updateProduct(productDTO);
         log.info("Update product operation has been executed successfully for product DTO: {}", updatedProduct);
@@ -51,8 +53,10 @@ public class ProductController {
     }
     
     @DeleteMapping
+    @RequiresAdminPrivilege
     public void deleteProduct(ProductDTO productDTO) {
         productService.deleteProduct(productDTO);
         log.info("Delete product operation has been executed successfully for product DTO: {}", productDTO);
     }
+    
 }

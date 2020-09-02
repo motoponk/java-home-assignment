@@ -19,11 +19,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderDTO extends OrderRequestDTO {
 
+    private String email;
     private LocalDateTime orderTime;
     private BigDecimal totalPrice;
 
     public OrderDTO(Order order) {
-        setEmail(order.getEmail());
+        this.email = order.getEmail();
         setProducts(order.getProducts().stream().map(ProductDTO::new).collect(Collectors.toList()));
         this.orderTime = order.getCreatedTime();
         this.totalPrice = order.getTotalPrice();

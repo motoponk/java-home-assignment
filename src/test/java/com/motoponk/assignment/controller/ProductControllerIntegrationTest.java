@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.motoponk.assignment.model.dto.ProductDTO;
 import com.motoponk.assignment.service.ProductService;
@@ -64,6 +66,8 @@ public class ProductControllerIntegrationTest {
     
     
     @Test
+    @Disabled
+    @WithMockUser(value = ProductTestUtil.SAMPLE_EMAIL, roles = "ADMIN")
     public void testAddProduct() {
         int beforeSize = readProductsSize();
         ProductDTO sampleProduct2DTO = ProductTestUtil.createSampleProduct2DTO();
